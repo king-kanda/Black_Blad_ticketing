@@ -4,6 +4,7 @@ import { ImageBackground, Text, View, StyleSheet, Pressable } from "react-native
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { bgImage } from '@/assets/images'
 import { Link } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 const App = () => {
   return (
@@ -19,10 +20,13 @@ const App = () => {
               </Text>
             </View>
             <View className="p-2 w-full">
-              <Link href='/search/scanner' className="bg-red-700 rounded-md text-white px-6 py-3 w-full">
-                <Text className="text-white font-semibold text-xl text-center">
-                  Scan Tickets
-                </Text>
+              <Link href='/search/scanner' className="bg-red-700 rounded-md text-white px-6 py-3 w-full" asChild>
+                <Pressable className={'flex flex-row items-center justify-center space-x-4 gap-2'}>
+                  <Ionicons name="qr-code" size={18} color="white" />
+                  <Text className="text-white font-semibold text-xl text-center">
+                    Scan Tickets
+                  </Text>
+                </Pressable>
               </Link>
               <View className="flex-row items-center px-5 my-4">
                 <View className="flex-1 h-[1px] bg-white/50" />
@@ -30,7 +34,7 @@ const App = () => {
                 <View className="flex-1 h-[1px] bg-white/50" />
               </View>
               <View className="flex items-center ">
-              <Link href='/gate-tickets/issue-ticket' className="text-white text-md underline">
+              <Link href="/search/issue-ticket" className="text-white text-md underline">
                 issue gate tickets
               </Link>
               </View>
