@@ -63,7 +63,7 @@ export default function App() {
                 onBarcodeScanned={({data}) => {
                   setTimeout(async () => {
                     await Linking.openURL(data)
-                  }, 500)
+                  }, 600)
                 }}
               >
 
