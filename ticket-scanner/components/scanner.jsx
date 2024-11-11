@@ -1,11 +1,58 @@
 import { View, Text, StyleSheet, Dimensions, Linking } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { CameraView } from 'expo-camera'
+import TicketModal from './ticket-modal';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCAN_AREA_SIZE = SCREEN_WIDTH * 0.7; // 70% of screen width
 
 const Scanner = () => {
+
+  const [ticket ,setTicket] = useState({})
+  const [ticketModalVisible, setTicketModalVisible] = useState(false);
+
+
+    //get tickets
+    const fetchTickets = async (data) => {
+        try {
+            const response = await fetch(data);
+        
+            if (!response.ok) {
+                console.log("Request failed with status:", response.status);
+            }
+        
+            const ticket = await response.json(); // Assuming the response is JSON
+            scanTicket(ticket)
+        
+        } catch (error) {
+            console.error("Error fetching ticket data:", error);
+        }
+    }
+
+    //scan ticket
+    const scanTicket = async (ticket) => {
+        try {
+            const response = await fetch(`https://4ec8-41-80-116-93.ngrok-free.app/api/tickets/${ticket.id}/scan`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if (!response.ok) {
+                console.log("Request failed with status:", response.status);
+                return;
+            }
+
+            const scannedTicket = await response.json(); // Assuming the response is JSON
+            setTicket(scannedTicket)
+            setTicketModalVisible(true)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+     
   return (
         <View style={styles.cameraContainer}>
               <CameraView 
@@ -13,8 +60,9 @@ const Scanner = () => {
                 facing="back"
                 onBarcodeScanned={({data}) => {
                   setTimeout(async () => {
-                    await Linking.openURL(data)
-                  }, 600)
+                    console.log(data)
+                    fetchTickets(data) 
+                  }, 0)
                 }}
               >
 
@@ -34,6 +82,12 @@ const Scanner = () => {
                   </View>
 
               </CameraView>
+
+              {/* scanned ticket modal */}
+
+              <TicketModal ticketModalVisible={ticketModalVisible} setTicketModalVisible={setTicketModalVisible}  ticket={ticket} />
+
+
             </View>
   )
 }

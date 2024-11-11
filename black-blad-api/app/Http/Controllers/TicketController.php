@@ -18,9 +18,7 @@ class TicketController extends Controller
         return response()->json($tickets);
     }
 
-    /**
-     * Store a newly created ticket in storage.
-     */
+
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -42,13 +40,13 @@ class TicketController extends Controller
         return response()->json($ticket, 201);
     }
 
-    /**
-     * Display the specified ticket.
-     */
+
     public function show(Ticket $ticket): JsonResponse
     {
         return response()->json($ticket->load(['event', 'ticketType']));
     }
+
+
 
     /**
      * Update the specified ticket in storage.
@@ -75,6 +73,8 @@ class TicketController extends Controller
         return response()->json($ticket);
     }
 
+
+
     /**
      * Remove the specified ticket from storage.
      */
@@ -84,19 +84,20 @@ class TicketController extends Controller
         return response()->json(null, 204);
     }
 
+
+
     /**
      * Scan a ticket.
      */
     public function scan(Ticket $ticket): JsonResponse
     {
-        if ($ticket->scanned) {
-            return response()->json(['error' => 'Ticket already scanned'], 400);
-        }
 
         $ticket->update(['scanned' => true]);
 
-        return response()->json(['message' => 'Ticket scanned successfully']);
+        return response()->json($ticket->load(['event', 'ticketType']));
     }
+
+
 
     /**
      * Get tickets for a specific event.
