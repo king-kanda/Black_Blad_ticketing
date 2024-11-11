@@ -25,9 +25,10 @@ Route::apiResource('events', EventsController::class);
 Route::apiResource('tickets', TicketController::class);
 Route::post('tickets/{ticket}/scan', [TicketController::class, 'scan']);
 Route::get('events/{event}/tickets', [TicketController::class, 'getEventTickets']);
+Route::get('events/{event}/ticket-types', [TicketTypeController::class, 'getEventTicketTypes']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('ticket-types', TicketTypeController::class);
-    Route::get('events/{event}/ticket-types', [TicketTypeController::class, 'getEventTicketTypes']);
+    // Route::get('events/{event}/ticket-types', [TicketTypeController::class, 'getEventTicketTypes']);
     Route::patch('ticket-types/{ticketType}/toggle-active', [TicketTypeController::class, 'toggleActive']);
 });
