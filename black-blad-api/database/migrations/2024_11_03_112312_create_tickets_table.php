@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->decimal('price', 10, 2);
-            $table->foreignId('ticket_type_id')->constrained('ticket_types');
+          
             $table->string('transaction_id');
             $table->integer('quantity');
             $table->boolean('scanned')->default(false);
