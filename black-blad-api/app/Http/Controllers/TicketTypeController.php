@@ -206,7 +206,7 @@ class TicketTypeController extends Controller
     {
         $ticketTypes = TicketType::where('event_id', $eventId)
             ->active()
-            ->with(['user'])
+            ->with(['event'])
             ->get();
 
         return response()->json([
