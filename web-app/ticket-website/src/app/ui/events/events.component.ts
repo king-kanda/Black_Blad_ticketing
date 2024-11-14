@@ -1,6 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-events',
@@ -10,24 +8,10 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './events.component.scss'
 })
 
-@Injectable({providedIn: 'root'})
-export class EventsComponent  implements OnInit {
 
-   data: any[] = [];
+export class EventsComponent {
 
-  constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-    this.fetchData();
-  }
-
-  fetchData() {
-    this.http.get<any[]>('http://localhost:8000/api/events')
-    .subscribe(response => {
-      console.log('Fetched data:', response);
-      this.data = response;
-    });
-  }
 
 
 
