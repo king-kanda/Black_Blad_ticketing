@@ -1,13 +1,18 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroMapPin , heroCalendarDays} from '@ng-icons/heroicons/outline';
 import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [],
+  imports: [DatePipe , NgIconComponent , RouterLink , RouterLinkActive],
   templateUrl: './events.component.html',
-  styleUrl: './events.component.scss'
+  styleUrl: './events.component.scss',
+  viewProviders: [provideIcons({ heroMapPin, heroCalendarDays })]
 })
 
 @Injectable({providedIn: 'root'})
